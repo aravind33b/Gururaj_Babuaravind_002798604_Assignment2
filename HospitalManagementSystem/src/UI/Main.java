@@ -34,9 +34,8 @@ public class Main extends javax.swing.JFrame {
         SplitPane = new javax.swing.JSplitPane();
         leftPanel = new javax.swing.JPanel();
         btnPatient = new javax.swing.JButton();
-        btnPerson = new javax.swing.JButton();
+        signUpBtn = new javax.swing.JButton();
         btnSearchAbnormal = new javax.swing.JButton();
-        signUpScreenButton = new javax.swing.JButton();
         loginScreenButton = new javax.swing.JButton();
         rightPanel = new javax.swing.JPanel();
 
@@ -51,10 +50,10 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        btnPerson.setText("Manage Person");
-        btnPerson.addActionListener(new java.awt.event.ActionListener() {
+        signUpBtn.setText("Sign-Up");
+        signUpBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPersonActionPerformed(evt);
+                signUpBtnActionPerformed(evt);
             }
         });
 
@@ -62,13 +61,6 @@ public class Main extends javax.swing.JFrame {
         btnSearchAbnormal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchAbnormalActionPerformed(evt);
-            }
-        });
-
-        signUpScreenButton.setText("Sign-Up");
-        signUpScreenButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signUpScreenButtonActionPerformed(evt);
             }
         });
 
@@ -88,20 +80,20 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSearchAbnormal, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnPatient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPerson, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(signUpScreenButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(loginScreenButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(signUpBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftPanelLayout.createSequentialGroup()
-                .addGap(133, 133, 133)
-                .addComponent(signUpScreenButton)
+                .addGap(174, 174, 174)
+                .addComponent(signUpBtn)
                 .addGap(18, 18, 18)
                 .addComponent(loginScreenButton)
-                .addGap(18, 18, 18)
-                .addComponent(btnPerson)
                 .addGap(18, 18, 18)
                 .addComponent(btnPatient)
                 .addGap(18, 18, 18)
@@ -115,7 +107,7 @@ public class Main extends javax.swing.JFrame {
         rightPanel.setLayout(rightPanelLayout);
         rightPanelLayout.setHorizontalGroup(
             rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 599, Short.MAX_VALUE)
+            .addGap(0, 613, Short.MAX_VALUE)
         );
         rightPanelLayout.setVerticalGroup(
             rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,11 +132,11 @@ public class Main extends javax.swing.JFrame {
 
     PersonDirectory personDirectory = new PersonDirectory();
     PatientDirectory patientDirectory = new PatientDirectory();
-    private void btnPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonActionPerformed
+    private void signUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpBtnActionPerformed
         // TODO add your handling code here:
         PersonDetails addPersonDetails = new PersonDetails(SplitPane,personDirectory,patientDirectory);
         SplitPane.setRightComponent(addPersonDetails);
-    }//GEN-LAST:event_btnPersonActionPerformed
+    }//GEN-LAST:event_signUpBtnActionPerformed
 
 
     private void btnPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPatientActionPerformed
@@ -158,11 +150,6 @@ public class Main extends javax.swing.JFrame {
         CommunitySearch communitySearch = new CommunitySearch(SplitPane,patientDirectory,personDirectory);
         SplitPane.setRightComponent(communitySearch);
     }//GEN-LAST:event_btnSearchAbnormalActionPerformed
-
-    private void signUpScreenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpScreenButtonActionPerformed
-        SignUpPanel signUp = new SignUpPanel();
-        SplitPane.setRightComponent(signUp);
-    }//GEN-LAST:event_signUpScreenButtonActionPerformed
 
     private void loginScreenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginScreenButtonActionPerformed
         LoginPanel login = new LoginPanel(SplitPane,patientDirectory,personDirectory);
@@ -207,11 +194,10 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSplitPane SplitPane;
     private javax.swing.JButton btnPatient;
-    private javax.swing.JButton btnPerson;
     private javax.swing.JButton btnSearchAbnormal;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JButton loginScreenButton;
     private javax.swing.JPanel rightPanel;
-    private javax.swing.JButton signUpScreenButton;
+    private javax.swing.JButton signUpBtn;
     // End of variables declaration//GEN-END:variables
 }

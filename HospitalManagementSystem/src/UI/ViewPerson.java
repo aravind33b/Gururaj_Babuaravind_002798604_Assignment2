@@ -26,11 +26,13 @@ public class ViewPerson extends javax.swing.JPanel {
     PersonDirectory personDirectory;
     private JSplitPane SplitPane;
     PatientDirectory patientDirectory;
-    public ViewPerson(JSplitPane SplitPane,PersonDirectory personDirectory,PatientDirectory patientDirectory) {
+    String searchEmail;
+    public ViewPerson(JSplitPane SplitPane,PersonDirectory personDirectory,PatientDirectory patientDirectory, String SearchEmail) {
         initComponents();
         this.personDirectory = personDirectory;
         this.SplitPane = SplitPane;
         this.patientDirectory = patientDirectory;
+        this.searchEmail = SearchEmail;
         populateTable();
     }
 
@@ -418,6 +420,8 @@ public class ViewPerson extends javax.swing.JPanel {
          
          for(Person p: personDirectory.getPersonDirectory())
          {
+             if(p.getEmail().equals(searchEmail))
+             {
              Object[] row = new Object[8];
              row[0]=p;
              row[1]=p.getAge();
@@ -429,6 +433,7 @@ public class ViewPerson extends javax.swing.JPanel {
              row[7]=p.getRole();
              
              model.addRow(row);
+             }
          }
     }
 }

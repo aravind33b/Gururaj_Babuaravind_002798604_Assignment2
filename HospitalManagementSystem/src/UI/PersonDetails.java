@@ -41,6 +41,7 @@ public class PersonDetails extends javax.swing.JPanel {
     PersonDirectory personDirectory;
     private JSplitPane SplitPane;
     PatientDirectory patientDirectory;
+    String SearchEmail;
     public PersonDetails(JSplitPane SplitPane, PersonDirectory personDirectory, PatientDirectory patientDirectory) {
         initComponents();
         licenseLabel.setVisible(false);
@@ -73,8 +74,6 @@ public class PersonDetails extends javax.swing.JPanel {
         txtCity = new javax.swing.JTextField();
         txtCommunity = new javax.swing.JTextField();
         btnSave = new javax.swing.JButton();
-        btnView = new javax.swing.JButton();
-        btnImport = new javax.swing.JButton();
         genderBox = new javax.swing.JComboBox<>();
         emailLabel = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
@@ -118,20 +117,6 @@ public class PersonDetails extends javax.swing.JPanel {
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
-            }
-        });
-
-        btnView.setText("View");
-        btnView.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewActionPerformed(evt);
-            }
-        });
-
-        btnImport.setText("Import");
-        btnImport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImportActionPerformed(evt);
             }
         });
 
@@ -184,15 +169,8 @@ public class PersonDetails extends javax.swing.JPanel {
                         .addGap(123, 123, 123))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnView)
-                                .addGap(1, 1, 1))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(doctorRadio)
-                                .addGap(56, 56, 56)))))
+                        .addComponent(doctorRadio)
+                        .addGap(56, 56, 56)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(passField, javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,12 +181,13 @@ public class PersonDetails extends javax.swing.JPanel {
                         .addComponent(txtResidence, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtCity, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtCommunity, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(licenseField, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(17, 17, 17)
-                            .addComponent(btnImport)))
+                        .addComponent(licenseField, javax.swing.GroupLayout.Alignment.LEADING))
                     .addComponent(patientRadio))
                 .addGap(0, 198, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(322, 322, 322)
+                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,10 +235,7 @@ public class PersonDetails extends javax.swing.JPanel {
                     .addComponent(doctorRadio)
                     .addComponent(patientRadio))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnImport)
-                    .addComponent(btnView)
-                    .addComponent(btnSave))
+                .addComponent(btnSave)
                 .addContainerGap(13, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -382,48 +358,6 @@ public class PersonDetails extends javax.swing.JPanel {
        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
-        // TODO add your handling code here:
-        ViewPerson viewPersonDetails = new ViewPerson(SplitPane,personDirectory,patientDirectory);
-        SplitPane.setRightComponent(viewPersonDetails);
-    }//GEN-LAST:event_btnViewActionPerformed
-
-    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
-        // TODO add your handling code here:
-        JFileChooser file = new JFileChooser();
-        file.setCurrentDirectory(new File(System.getProperty("user.home")));
-        int result = file.showSaveDialog(null);
-        if(result == JFileChooser.APPROVE_OPTION){
-            File selectedFile = file.getSelectedFile();
-            String path = selectedFile.getAbsolutePath();
-   //         String path = "C:\\Users\\bhuva\\OneDrive\\Desktop\\Java Assignment 1 photos\\Car Datacsv.csv";
-            String line = "";
-            try{
-                BufferedReader br = new BufferedReader(new FileReader(path));
-                while ((line = br.readLine()) != null) {
-                    String [] values = line.split(",");   
-                    String Name = String.valueOf(values[0]);
-                    int Age = Integer.parseInt(String.valueOf(values[1]));
-                    String Gender = String.valueOf(values[2]);
-                    String Residence = String.valueOf(values[3]);
-                    String City = String.valueOf(values[4]);
-                    String Community = String.valueOf(values[5]);
-                    Person pr = personDirectory.addNewPerson();
-                    pr.setName(Name);
-                    pr.setAge(Age);
-                    //pr.setGender(Gender);
-                    pr.setAddress(Residence);
-                    pr.setCity(City);
-                    pr.setCommunity(Community);
-                }
-            } catch(FileNotFoundException e){
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-                }
-        }
-    }//GEN-LAST:event_btnImportActionPerformed
-
     private void doctorRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorRadioActionPerformed
         if(doctorRadio.isSelected() == true){
             licenseLabel.setVisible(true);
@@ -442,9 +376,7 @@ public class PersonDetails extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnImport;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnView;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JRadioButton doctorRadio;
     private javax.swing.JTextField emailField;

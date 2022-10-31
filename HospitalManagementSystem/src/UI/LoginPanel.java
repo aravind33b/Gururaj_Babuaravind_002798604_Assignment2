@@ -4,7 +4,6 @@
  */
 package UI;
 
-import static UI.SignUpPanel.Role;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 import model.PatientDirectory;
@@ -22,6 +21,7 @@ public class LoginPanel extends javax.swing.JPanel {
     PersonDirectory personDirectory;
     private JSplitPane SplitPane;
     PatientDirectory patientDirectory;
+    String SearchEmail;
     static String Role = "";
     
     public LoginPanel(JSplitPane SplitPane, PatientDirectory patientDirectory, PersonDirectory personDirectory) {
@@ -50,7 +50,7 @@ public class LoginPanel extends javax.swing.JPanel {
         licenseField = new javax.swing.JTextField();
         doctorRadio = new javax.swing.JRadioButton();
         patientRadio = new javax.swing.JRadioButton();
-        btnView = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
         passwordField = new javax.swing.JPasswordField();
 
         userNameLabel.setText("Username");
@@ -75,10 +75,10 @@ public class LoginPanel extends javax.swing.JPanel {
             }
         });
 
-        btnView.setText("View");
-        btnView.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewActionPerformed(evt);
+                btnLoginActionPerformed(evt);
             }
         });
 
@@ -106,7 +106,7 @@ public class LoginPanel extends javax.swing.JPanel {
                         .addComponent(patientRadio))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(275, 275, 275)
-                        .addComponent(btnView)))
+                        .addComponent(btnLogin)))
                 .addContainerGap(258, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -129,7 +129,7 @@ public class LoginPanel extends javax.swing.JPanel {
                     .addComponent(doctorRadio)
                     .addComponent(patientRadio))
                 .addGap(18, 18, 18)
-                .addComponent(btnView)
+                .addComponent(btnLogin)
                 .addContainerGap(135, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -150,49 +150,67 @@ public class LoginPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_patientRadioActionPerformed
 
-    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         if(Role=="Doctor")
-        {
-//            Person p = personDirectory.addNewPerson();
-            
-            String SearchEmail = userNameField.getText();
+        {   
+//            Person prn;
+//            Person prn = new Person();
+            SearchEmail = userNameField.getText();
             char SearchPass[] = passwordField.getPassword();
-            for(Person prn: personDirectory.getPersonDirectory()){
-                if(prn.getEmail().equals(SearchEmail) && java.util.Arrays.equals(prn.getPassword(),SearchPass))
+            Integer temp = 0;
+            if(SearchEmail.length() == 0 || SearchPass[0] == 0)
                 {
-                    ViewPerson viewPersonDetails = new ViewPerson(SplitPane,personDirectory,patientDirectory);
-                    SplitPane.setRightComponent(viewPersonDetails);
+                    JOptionPane.showMessageDialog(this, "Username or Password is Empty");
                 }
-                else
+            else
+            {
+                for(Person prn :  personDirectory.getPersonDirectory()){
+                    if(prn.getEmail().equals(SearchEmail) && java.util.Arrays.equals(prn.getPassword(),SearchPass))
+                    {
+                        ViewPerson viewPersonDetails = new ViewPerson(SplitPane,personDirectory,patientDirectory,SearchEmail);
+                        SplitPane.setRightComponent(viewPersonDetails);
+                        temp=1;
+                        break;
+                    }
+                }
+                if(temp==0)
                 {
-                    JOptionPane.showMessageDialog(this, "Select a row to view or update it.");
+                    JOptionPane.showMessageDialog(this, "Username or Password does not match");
                 }
-//           if(i.getUsername().equals(jTextField10.getText())){
-//               
-//              System.out.println(i.getUsername());
-//               
-//               jTabbedPane1.setSelectedIndex(8);
-//           }
-//           else if(jTextField10.getText().isEmpty()||jPasswordField4.getText().isEmpty()){
-//               JOptionPane.showMessageDialog(this,"Enter credentials");
-//           }
-//            else{
-//               JOptionPane.showMessageDialog(this,"username not found");
-//           }
-           
-       }
+            }
         }
         else if(Role=="Patient")
         {
-            ViewPerson viewPersonDetails = new ViewPerson(SplitPane,personDirectory,patientDirectory);
-            SplitPane.setRightComponent(viewPersonDetails);
+            String SearchEmail = userNameField.getText();
+            char SearchPass[] = passwordField.getPassword();
+            Integer temp = 0;
+            if(SearchEmail.length() == 0 || SearchPass[0] == 0)
+                {
+                    JOptionPane.showMessageDialog(this, "Username or Password is Empty");
+                }
+            else
+            {
+                for(Person prn :  personDirectory.getPersonDirectory()){
+                    if(prn.getEmail().equals(SearchEmail) && java.util.Arrays.equals(prn.getPassword(),SearchPass))
+                    {
+                        ViewPerson viewPersonDetails = new ViewPerson(SplitPane,personDirectory,patientDirectory,SearchEmail);
+                        SplitPane.setRightComponent(viewPersonDetails);
+                        temp=1;
+                        break;
+                    }
+                }
+                if(temp==0)
+                {
+                    JOptionPane.showMessageDialog(this, "Username or Password does not match");
+                }
+            }
         }
-    }//GEN-LAST:event_btnViewActionPerformed
+    }//GEN-LAST:event_btnLoginActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnView;
+    private javax.swing.JButton btnLogin;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JRadioButton doctorRadio;
     private javax.swing.JTextField licenseField;
