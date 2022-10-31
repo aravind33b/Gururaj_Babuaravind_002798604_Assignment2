@@ -19,6 +19,7 @@ import model.PersonDirectory;
 import javax.swing.JSplitPane;
 import model.Patient;
 import model.PatientDirectory;
+import UI.PersonDetails;
 
 /**
  *
@@ -30,11 +31,13 @@ public class PersonDetails extends javax.swing.JPanel {
      * Creates new form PersonDetails
      */
     static String Role = "";
-            
+           
+    Integer PatientID = 0;
     private int selectedRowIndex;
     String InitialName;
     int InitialAge;
     String InitialGender;
+    //String Password;
     PersonDirectory personDirectory;
     private JSplitPane SplitPane;
     PatientDirectory patientDirectory;
@@ -79,6 +82,8 @@ public class PersonDetails extends javax.swing.JPanel {
         licenseField = new javax.swing.JTextField();
         doctorRadio = new javax.swing.JRadioButton();
         patientRadio = new javax.swing.JRadioButton();
+        passLabel = new javax.swing.JLabel();
+        passField = new javax.swing.JPasswordField();
 
         titlePerson.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         titlePerson.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -152,6 +157,8 @@ public class PersonDetails extends javax.swing.JPanel {
             }
         });
 
+        passLabel.setText("Password:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -163,41 +170,45 @@ public class PersonDetails extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(275, 275, 275)
-                        .addComponent(btnView)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnImport))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(95, 95, 95)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblAge)
-                                    .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(emailLabel)
-                                    .addComponent(lblGender, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblResidence, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblCity, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblCommunity, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(licenseLabel)))
-                                .addGap(123, 123, 123))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(doctorRadio)
-                                .addGap(38, 38, 38)))
+                        .addGap(95, 95, 95)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblAge)
+                            .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(emailLabel)
+                            .addComponent(lblGender, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblResidence, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCity, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCommunity, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(licenseLabel)
+                            .addComponent(passLabel))
+                        .addGap(123, 123, 123))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(patientRadio)
-                            .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(genderBox, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtResidence, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCommunity, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(licenseField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(146, 198, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnView)
+                                .addGap(1, 1, 1))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(doctorRadio)
+                                .addGap(56, 56, 56)))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(passField, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtAge, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(emailField, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(genderBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 170, Short.MAX_VALUE)
+                        .addComponent(txtResidence, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtCity, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtCommunity, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(licenseField, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(17, 17, 17)
+                            .addComponent(btnImport)))
+                    .addComponent(patientRadio))
+                .addGap(0, 198, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,16 +247,20 @@ public class PersonDetails extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(licenseLabel)
                     .addComponent(licenseField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(passLabel)
+                    .addComponent(passField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(doctorRadio)
                     .addComponent(patientRadio))
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnView)
                     .addComponent(btnImport)
+                    .addComponent(btnView)
                     .addComponent(btnSave))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -310,6 +325,7 @@ public class PersonDetails extends javax.swing.JPanel {
         String Residence = txtResidence.getText();
         String City = txtCity.getText();
         String Community = txtCommunity.getText();
+        char Password[] = passField.getPassword();
         
         Person p = personDirectory.addNewPerson();
         p.setName(Name);
@@ -320,6 +336,7 @@ public class PersonDetails extends javax.swing.JPanel {
         p.setCity(City);
         p.setCommunity(Community);
         p.setRole(Role);
+        p.setPassword(Password);
         
         JOptionPane.showMessageDialog(this, "Person Details Saved");
         
@@ -330,6 +347,7 @@ public class PersonDetails extends javax.swing.JPanel {
         txtCity.setText("");
         txtCommunity.setText("");
         emailField.setText("");
+        licenseField.setText("");
         
         //writting into Patient Table as well
         int t=0;
@@ -355,11 +373,12 @@ public class PersonDetails extends javax.swing.JPanel {
         pnt.setAddress(Residence);
         pnt.setCity(City);
         pnt.setCommunity(Community);
+        pnt.setPatientID(++PatientID);
         }
-        else
-        {
-            JOptionPane.showMessageDialog(this, "This patient ID is already used");
-        }
+//        else
+//        {
+//            JOptionPane.showMessageDialog(this, "This patient ID is already used");
+//        }
        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -439,6 +458,8 @@ public class PersonDetails extends javax.swing.JPanel {
     private javax.swing.JLabel lblResidence;
     private javax.swing.JTextField licenseField;
     private javax.swing.JLabel licenseLabel;
+    private javax.swing.JPasswordField passField;
+    private javax.swing.JLabel passLabel;
     private javax.swing.JRadioButton patientRadio;
     private javax.swing.JLabel titlePerson;
     private javax.swing.JTextField txtAge;

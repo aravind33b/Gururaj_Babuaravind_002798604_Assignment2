@@ -45,6 +45,15 @@ public class Person extends Address{
         this.Role = Role;
     }
     
+    public char[] getPassword() {
+        return Password;
+    }
+
+    public void setPassword(char Password[])
+    {
+        this.Password = Password;
+    }
+    
     public String getLicense() {
         return License;
     }
@@ -73,4 +82,5 @@ public class Person extends Address{
     protected String Email;
     protected String Role;
     protected String License;
+    protected char Password[];
 }

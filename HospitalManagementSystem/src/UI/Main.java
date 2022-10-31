@@ -5,6 +5,7 @@
  */
 package UI;
 
+import javax.swing.JSplitPane;
 import model.PatientDirectory;
 import model.PersonDirectory;
 
@@ -164,7 +165,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_signUpScreenButtonActionPerformed
 
     private void loginScreenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginScreenButtonActionPerformed
-        LoginPanel login = new LoginPanel();
+        LoginPanel login = new LoginPanel(SplitPane,patientDirectory,personDirectory);
         SplitPane.setRightComponent(login);
     }//GEN-LAST:event_loginScreenButtonActionPerformed
 

@@ -4,6 +4,12 @@
  */
 package UI;
 
+import static UI.SignUpPanel.Role;
+import javax.swing.JOptionPane;
+import javax.swing.JSplitPane;
+import model.PatientDirectory;
+import model.Person;
+import model.PersonDirectory;
 /**
  *
  * @author aravind
@@ -13,10 +19,18 @@ public class LoginPanel extends javax.swing.JPanel {
     /**
      * Creates new form LoginPanel
      */
-    public LoginPanel() {
+    PersonDirectory personDirectory;
+    private JSplitPane SplitPane;
+    PatientDirectory patientDirectory;
+    static String Role = "";
+    
+    public LoginPanel(JSplitPane SplitPane, PatientDirectory patientDirectory, PersonDirectory personDirectory) {
         initComponents();
         licenseLabel.setVisible(false);
         licenseField.setVisible(false);
+        this.personDirectory = personDirectory;
+        this.SplitPane = SplitPane;
+        this.patientDirectory = patientDirectory;
     }
 
     /**
@@ -32,20 +46,18 @@ public class LoginPanel extends javax.swing.JPanel {
         userNameLabel = new javax.swing.JLabel();
         passwordLabel = new javax.swing.JLabel();
         userNameField = new javax.swing.JTextField();
-        passwordField = new javax.swing.JTextField();
         licenseLabel = new javax.swing.JLabel();
         licenseField = new javax.swing.JTextField();
-        loginButton = new javax.swing.JButton();
         doctorRadio = new javax.swing.JRadioButton();
         patientRadio = new javax.swing.JRadioButton();
+        btnView = new javax.swing.JButton();
+        passwordField = new javax.swing.JPasswordField();
 
         userNameLabel.setText("Username");
 
         passwordLabel.setText("Password");
 
         licenseLabel.setText("License Number");
-
-        loginButton.setText("Login");
 
         buttonGroup2.add(doctorRadio);
         doctorRadio.setText("Doctor");
@@ -63,6 +75,13 @@ public class LoginPanel extends javax.swing.JPanel {
             }
         });
 
+        btnView.setText("View");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -76,18 +95,18 @@ public class LoginPanel extends javax.swing.JPanel {
                             .addComponent(userNameLabel)
                             .addComponent(passwordLabel))
                         .addGap(96, 96, 96)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(licenseField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(userNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(259, 259, 259)
-                        .addComponent(loginButton))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(licenseField)
+                            .addComponent(userNameField)
+                            .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(221, 221, 221)
                         .addComponent(doctorRadio)
                         .addGap(52, 52, 52)
-                        .addComponent(patientRadio)))
+                        .addComponent(patientRadio))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(275, 275, 275)
+                        .addComponent(btnView)))
                 .addContainerGap(258, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -102,16 +121,16 @@ public class LoginPanel extends javax.swing.JPanel {
                     .addComponent(licenseLabel)
                     .addComponent(licenseField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(passwordLabel)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(doctorRadio)
                     .addComponent(patientRadio))
-                .addGap(34, 34, 34)
-                .addComponent(loginButton)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnView)
+                .addContainerGap(135, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -119,6 +138,7 @@ public class LoginPanel extends javax.swing.JPanel {
         if(doctorRadio.isSelected() == true){
             licenseLabel.setVisible(true);
             licenseField.setVisible(true);
+            Role = "Doctor";
         }
     }//GEN-LAST:event_doctorRadioActionPerformed
 
@@ -126,17 +146,58 @@ public class LoginPanel extends javax.swing.JPanel {
         if(patientRadio.isSelected() == true){
             licenseLabel.setVisible(false);
             licenseField.setVisible(false);
+            Role = "Patient";
         }
     }//GEN-LAST:event_patientRadioActionPerformed
 
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        // TODO add your handling code here:
+        if(Role=="Doctor")
+        {
+//            Person p = personDirectory.addNewPerson();
+            
+            String SearchEmail = userNameField.getText();
+            char SearchPass[] = passwordField.getPassword();
+            for(Person prn: personDirectory.getPersonDirectory()){
+                if(prn.getEmail().equals(SearchEmail) && java.util.Arrays.equals(prn.getPassword(),SearchPass))
+                {
+                    ViewPerson viewPersonDetails = new ViewPerson(SplitPane,personDirectory,patientDirectory);
+                    SplitPane.setRightComponent(viewPersonDetails);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Select a row to view or update it.");
+                }
+//           if(i.getUsername().equals(jTextField10.getText())){
+//               
+//              System.out.println(i.getUsername());
+//               
+//               jTabbedPane1.setSelectedIndex(8);
+//           }
+//           else if(jTextField10.getText().isEmpty()||jPasswordField4.getText().isEmpty()){
+//               JOptionPane.showMessageDialog(this,"Enter credentials");
+//           }
+//            else{
+//               JOptionPane.showMessageDialog(this,"username not found");
+//           }
+           
+       }
+        }
+        else if(Role=="Patient")
+        {
+            ViewPerson viewPersonDetails = new ViewPerson(SplitPane,personDirectory,patientDirectory);
+            SplitPane.setRightComponent(viewPersonDetails);
+        }
+    }//GEN-LAST:event_btnViewActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnView;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JRadioButton doctorRadio;
     private javax.swing.JTextField licenseField;
     private javax.swing.JLabel licenseLabel;
-    private javax.swing.JButton loginButton;
-    private javax.swing.JTextField passwordField;
+    private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JRadioButton patientRadio;
     private javax.swing.JTextField userNameField;

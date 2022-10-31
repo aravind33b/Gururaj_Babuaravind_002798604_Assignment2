@@ -292,7 +292,7 @@ public class ViewPatient extends javax.swing.JPanel {
              Object[] row = new Object[7];
              row[0]=p;
              row[1]=p.getAge();
-             //row[2]=p.getGender();
+             row[2]=p.getGender();
              row[3]=p.getAddress();
              row[4]=p.getCity();
              row[5]=p.getCommunity();
@@ -444,7 +444,7 @@ public class ViewPatient extends javax.swing.JPanel {
              Object[] row = new Object[7];
              row[0]=p;
              row[1]=p.getAge();
-             //row[2]=p.getGender();
+             row[2]=p.getGender();
              row[3]=p.getAddress();
              row[4]=p.getCity();
              row[5]=p.getCommunity();

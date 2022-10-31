@@ -11,6 +11,7 @@ import model.Patient;
 import model.PatientDirectory;
 import model.Person;
 import model.PersonDirectory;
+import UI.PersonDetails;
 
 /**
  *
@@ -28,6 +29,7 @@ public class PatientDetails extends javax.swing.JPanel {
     String InitialName;
     int InitialAge;
     String InitialGender;
+    int PatientID = 1;
             
     public PatientDetails(JSplitPane SplitPane, PatientDirectory patientDirectory, PersonDirectory personDirectory,int selectedRowIndex) {
         initComponents();
@@ -46,7 +48,7 @@ public class PatientDetails extends javax.swing.JPanel {
             this.InitialAge=p.getAge();
             txtName.setText(p.getName());
             txtAge.setText(String.valueOf(p.getAge()));
-            txtGender.setText(p.getGender());
+            genderBox.setText(p.getGender());
             txtCommunity.setText(p.getCommunity());
             txtResidence.setText(p.getAddress());
             txtCity.setText(p.getCity());
@@ -67,7 +69,7 @@ public class PatientDetails extends javax.swing.JPanel {
 
         txtName = new javax.swing.JTextField();
         txtAge = new javax.swing.JTextField();
-        txtGender = new javax.swing.JTextField();
+        genderBox = new javax.swing.JTextField();
         titlePatient = new javax.swing.JLabel();
         txtResidence = new javax.swing.JTextField();
         lblName = new javax.swing.JLabel();
@@ -152,7 +154,7 @@ public class PatientDetails extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnView))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtGender, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(genderBox, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtAge, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
                                 .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtCommunity, javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,7 +181,7 @@ public class PatientDetails extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGender)
-                    .addComponent(txtGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(genderBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblResidence)
@@ -235,7 +237,7 @@ public class PatientDetails extends javax.swing.JPanel {
        {
         JOptionPane.showMessageDialog(this, "Age Feild is empty");
        }
-       else if(txtGender.getText().equals(""))
+       else if(genderBox.getText().equals(""))
        {
         JOptionPane.showMessageDialog(this, "Gender Feild is empty");
        }
@@ -268,31 +270,31 @@ public class PatientDetails extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Patient ID Entered should be Integer");
        }
        
-       else if(!(txtGender.getText().equals("Male") || txtGender.getText().equals("Female") || txtGender.getText().equals("male") || txtGender.getText().equals("female")))
+       else if(!(genderBox.getText().equals("Male") || genderBox.getText().equals("Female") || genderBox.getText().equals("male") || genderBox.getText().equals("female")))
        {
         JOptionPane.showMessageDialog(this, "Gender Feild Invalid");
        }
-       else if(!(InitialName.equals(txtName.getText())) || !(InitialGender.equals(txtGender.getText())) || (InitialAge!=Integer.parseInt(txtAge.getText())))
+       else if(!(InitialName.equals(txtName.getText())) || !(InitialGender.equals(genderBox.getText())) || (InitialAge!=Integer.parseInt(txtAge.getText())))
        {
            JOptionPane.showMessageDialog(this, "Current values don't match the initial values");
        }
        else
         {
         int t=0;
-        for(Patient pt: patientDirectory.getPatientDirectory())
-        {
-            if(pt.getPatientID()==Integer.parseInt(txtPatientID.getText()))
-                t++;
-        }
-        if(t==0)
-        {
+//        for(Patient pt: patientDirectory.getPatientDirectory())
+//        {
+//            if(pt.getPatientID()==Integer.parseInt(txtPatientID.getText()))
+//                t++;
+//        }
+//        if(t==0)
+//        {
+        PatientID++;
         String Name = txtName.getText();
         int age = Integer.parseInt(txtAge.getText());
-        String Gender = txtGender.getText();
+        String Gender = genderBox.getText();
         String Residence = txtResidence.getText();
         String City = txtCity.getText();
         String Community = txtCommunity.getText();
-        int PatientID = Integer.parseInt(txtPatientID.getText());
         
         Patient p = patientDirectory.addNewPatient();
         p.setName(Name);
@@ -307,23 +309,24 @@ public class PatientDetails extends javax.swing.JPanel {
         
         txtName.setText("");
         txtAge.setText("");
-        txtGender.setText("");
+        genderBox.setText("");
         txtResidence.setText("");
         txtCity.setText("");
         txtCommunity.setText("");
         txtPatientID.setText("");
         }
-        else
-        {
-            JOptionPane.showMessageDialog(this, "This patient ID is already used");
-        }
-        }
+//        else
+//        {
+//            JOptionPane.showMessageDialog(this, "This patient ID is already used");
+//        }
+        //}
     }//GEN-LAST:event_btnSaveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnView;
+    private javax.swing.JTextField genderBox;
     private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblCity;
     private javax.swing.JLabel lblCommunity;
@@ -335,7 +338,6 @@ public class PatientDetails extends javax.swing.JPanel {
     private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtCity;
     private javax.swing.JTextField txtCommunity;
-    private javax.swing.JTextField txtGender;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPatientID;
     private javax.swing.JTextField txtResidence;
