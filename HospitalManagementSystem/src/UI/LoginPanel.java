@@ -194,8 +194,8 @@ public class LoginPanel extends javax.swing.JPanel {
                 for(Person prn :  personDirectory.getPersonDirectory()){
                     if(prn.getEmail().equals(SearchEmail) && java.util.Arrays.equals(prn.getPassword(),SearchPass))
                     {
-                        ViewPerson viewPersonDetails = new ViewPerson(SplitPane,personDirectory,patientDirectory,SearchEmail);
-                        SplitPane.setRightComponent(viewPersonDetails);
+                        appointmentBooking aptBook = new appointmentBooking(SplitPane,personDirectory,patientDirectory,SearchEmail);
+                        SplitPane.setRightComponent(aptBook);
                         temp=1;
                         break;
                     }
