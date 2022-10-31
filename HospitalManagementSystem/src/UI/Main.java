@@ -8,6 +8,7 @@ package UI;
 import javax.swing.JSplitPane;
 import model.PatientDirectory;
 import model.PersonDirectory;
+import model.*;
 
 /**
  *
@@ -20,7 +21,10 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+//        Person prn = new Person();
     }
+   
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

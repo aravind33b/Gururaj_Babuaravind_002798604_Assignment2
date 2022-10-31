@@ -7,7 +7,7 @@ package model;
 
 /**
  *
- * @author Subhash
+ * @author aravind
  */
 public class Community extends City{
     protected String Community;

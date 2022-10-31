@@ -13,61 +13,61 @@ public class Doctor {
         return Name;
     }
 
-    public void setName(String Name) {
+    public void setPatientToDoctor(String Name) {
         this.Name = Name;
     }
 
-    public int getAge() {
-        return age;
+    public String getPatientToDoctor() {
+        return Name;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-    
-    public String getEmail() {
-        return Email;
-    }
-    
-    public void setEmail(String Email)
-    {
-        this.Email = Email;
-    }
-    
-    public String getRole() {
-        return Role;
-    }
-
-    public void setRole(String Role)
-    {
-        this.Role = Role;
-    }
-    
-    public char[] getPassword() {
-        return Password;
-    }
-
-    public void setPassword(char Password[])
-    {
-        this.Password = Password;
-    }
-    
-    public String getLicense() {
-        return License;
-    }
-
-    public void setLicense(String License)
-    {
-        this.License = License;
-    }
-    
-    public String getGender() {
-        return Gender;
-    }
-
-    public void setGender(String Gender) {
-        this.Gender = Gender;
-    }
+//    public void setAge(int age) {
+//        this.age = age;
+//    }
+//    
+//    public String getEmail() {
+//        return Email;
+//    }
+//    
+//    public void setEmail(String Email)
+//    {
+//        this.Email = Email;
+//    }
+//    
+//    public String getRole() {
+//        return Role;
+//    }
+//
+//    public void setRole(String Role)
+//    {
+//        this.Role = Role;
+//    }
+//    
+//    public char[] getPassword() {
+//        return Password;
+//    }
+//
+//    public void setPassword(char Password[])
+//    {
+//        this.Password = Password;
+//    }
+//    
+//    public String getLicense() {
+//        return License;
+//    }
+//
+//    public void setLicense(String License)
+//    {
+//        this.License = License;
+//    }
+//    
+//    public String getGender() {
+//        return Gender;
+//    }
+//
+//    public void setGender(String Gender) {
+//        this.Gender = Gender;
+//    }
 
     @Override
     public String toString()
@@ -75,10 +75,10 @@ public class Doctor {
         return Name;
     }
     protected String Name;
-    protected int age;
-    protected String Gender;
-    protected String Email;
-    protected String Role;
-    protected String License;
-    protected char Password[];
+//    protected int age;
+//    protected String Gender;
+//    protected String Email;
+//    protected String Role;
+//    protected String License;
+//    protected char Password[];
 }

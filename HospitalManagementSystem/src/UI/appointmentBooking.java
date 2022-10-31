@@ -13,6 +13,7 @@ import model.Patient;
 import model.PatientDirectory;
 import model.Person;
 import model.PersonDirectory;
+import model.ValidationUtilities;
 
 /**
  *
@@ -28,6 +29,7 @@ public class appointmentBooking extends javax.swing.JPanel {
     PersonDirectory personDirectory;
     String communityID;
     String PatientName;
+    int PID;
  
     public appointmentBooking(JSplitPane SplitPane, PersonDirectory personDirectory, PatientDirectory patientDirectory, String SearchEmail) {
         initComponents();
@@ -66,6 +68,10 @@ public class appointmentBooking extends javax.swing.JPanel {
         checkBoxDoctor = new javax.swing.JCheckBox();
         checkBoxHospital = new javax.swing.JCheckBox();
         apointmentBtn = new javax.swing.JButton();
+        docSelected = new javax.swing.JLabel();
+        showDoctor = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        startDate = new javax.swing.JFormattedTextField();
 
         tblViewPatients.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -197,6 +203,17 @@ public class appointmentBooking extends javax.swing.JPanel {
             }
         });
 
+        docSelected.setText("Doctor Selected:");
+
+        jLabel1.setText("Enter a date:");
+
+        startDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        startDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startDateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -213,7 +230,6 @@ public class appointmentBooking extends javax.swing.JPanel {
                         .addComponent(btnDeleteVital))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblCommunity)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -221,10 +237,21 @@ public class appointmentBooking extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnRefresh)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnBack)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBack))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(lblCommunity)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel1)
+                                        .addComponent(docSelected))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(showDoctor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(startDate, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)))))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnViewVitals)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnAddVitals)
@@ -233,17 +260,19 @@ public class appointmentBooking extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnDelete))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtCommunity, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(39, 39, 39)
-                                .addComponent(btnSearch))
-                            .addComponent(checkBoxDoctor)
-                            .addComponent(checkBoxHospital))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(checkBoxDoctor)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtCommunity, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnSearch))
+                                    .addComponent(checkBoxHospital))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(341, 341, 341)
+                        .addComponent(apointmentBtn)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(359, 359, 359)
-                .addComponent(apointmentBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,12 +302,24 @@ public class appointmentBooking extends javax.swing.JPanel {
                 .addComponent(checkBoxDoctor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(checkBoxHospital)
-                .addGap(18, 18, 18)
-                .addComponent(apointmentBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDeleteVital)
-                    .addComponent(btnEditVital))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(docSelected)
+                            .addComponent(showDoctor))
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel1))
+                    .addComponent(startDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDeleteVital)
+                            .addComponent(btnEditVital)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(apointmentBtn)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -304,6 +345,7 @@ public class appointmentBooking extends javax.swing.JPanel {
              row[6]=p.getPatientID();
              communityID = p.getCommunity();
              PatientName = p.getName();
+             PID = p.getPatientID();
              model.addRow(row);
          }
     }
@@ -355,8 +397,9 @@ public class appointmentBooking extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tblViewPatients.getModel();
         Patient selectedPatient = (Patient) model.getValueAt(selectedRowIndex, 0);
         int PatientID = selectedPatient.getPatientID();
+        String DateVal = "0";
         
-        AddVitalSigns addVitalSigns = new AddVitalSigns(SplitPane,patientDirectory,personDirectory,PatientID);
+        AddVitalSigns addVitalSigns = new AddVitalSigns(SplitPane,patientDirectory,personDirectory,PatientID, DateVal);
         SplitPane.setRightComponent(addVitalSigns);
     }//GEN-LAST:event_btnAddVitalsActionPerformed
 
@@ -596,6 +639,17 @@ public class appointmentBooking extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_checkBoxHospitalActionPerformed
 
+    public boolean validateForm() {
+        boolean isFormValid = true;
+        if (ValidationUtilities.isValidSelection(String.valueOf(startDate.getText().trim()))) {
+            startDate.requestFocus();
+        } else {
+            isFormValid = false;
+            JOptionPane.showMessageDialog(this,"Enter a Valid Date");
+        }
+        return isFormValid;
+    }
+    
     private void apointmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apointmentBtnActionPerformed
         // TODO add your handling code here:
         int selectedRowIndex = tblViewPatients.getSelectedRow();
@@ -605,10 +659,35 @@ public class appointmentBooking extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Select a Doctor to book apointment.");
             return;
         }
+//        else if(startDate.getText().isEmpty())
+//        {
+//            JOptionPane.showMessageDialog(this, "Enter a Date");
+//            return;
+//        }
+        else
+        {
+            
         DefaultTableModel model = (DefaultTableModel) tblViewPatients.getModel();
         Person selectedDoc = (Person) model.getValueAt(selectedRowIndex, 0);
         String selectedDoctor = selectedDoc.getName();
+        String DateVal = startDate.getText();
+        for(Patient p: patientDirectory.getPatientDirectory())
+         {
+             if(p.getPatientID() == PID)
+                 p.setPatientToDoctor(PatientName);
+         }
+//        AddVitalSigns addVitalSigns = new AddVitalSigns(SplitPane,patientDirectory,personDirectory,PID, DateVal);
+//        SplitPane.setRightComponent(addVitalSigns);
+        
+        JOptionPane.showMessageDialog(this, "Apointment fixed with Dr." + selectedDoctor + "!");
+        }
+        
     }//GEN-LAST:event_apointmentBtnActionPerformed
+
+    
+    private void startDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_startDateActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -625,9 +704,13 @@ public class appointmentBooking extends javax.swing.JPanel {
     private javax.swing.JButton btnViewVitals;
     private javax.swing.JCheckBox checkBoxDoctor;
     private javax.swing.JCheckBox checkBoxHospital;
+    private javax.swing.JLabel docSelected;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCommunity;
+    private javax.swing.JLabel showDoctor;
+    private javax.swing.JFormattedTextField startDate;
     private javax.swing.JTable tblViewPatients;
     private javax.swing.JTable tblVitals;
     private javax.swing.JTextField txtCommunity;

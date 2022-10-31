@@ -28,12 +28,14 @@ public class AddVitalSigns extends javax.swing.JPanel {
     private JSplitPane SplitPane;
     PersonDirectory personDirectory;
     private int PatientID;
-    public AddVitalSigns(JSplitPane SplitPane,PatientDirectory patientDirectory,PersonDirectory personDirectory,int PatientID) {
+    private String DateVal;
+    public AddVitalSigns(JSplitPane SplitPane,PatientDirectory patientDirectory,PersonDirectory personDirectory,int PatientID,String Dateval) {
         initComponents();
         this.patientDirectory = patientDirectory;
         this.SplitPane = SplitPane;
         this.PatientID = PatientID;
         this.personDirectory = personDirectory;
+        this.DateVal = DateVal;
         
         for(Patient p: patientDirectory.getPatientDirectory())
          {
@@ -201,10 +203,13 @@ public class AddVitalSigns extends javax.swing.JPanel {
              pe.setBloodPressure(Integer.parseInt(txtBloodPressure.getText()));
              pe.setTemperature(Integer.parseInt(txtTemperature.getText()));
              pe.setPulse(Integer.parseInt(txtPulse.getText()));
+             if(DateVal=="0")
+             {
              DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
              LocalDateTime now = LocalDateTime.now();
              String UpdateTime = dtf.format(now);
              pe.setUpdateTime(UpdateTime);
+             }
              if(pe.getBloodPressure()>120 || pe.getBloodPressure()<80 || pe.getPulse()<60 || pe.getPulse()>100 || pe.getTemperature()>103 || pe.getTemperature()<96)
              p.setAbnormal(true);
              else

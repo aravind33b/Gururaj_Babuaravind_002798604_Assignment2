@@ -313,6 +313,7 @@ public class PersonDetails extends javax.swing.JPanel {
         p.setCommunity(Community);
         p.setRole(Role);
         p.setPassword(Password);
+        p.setPatientToDoctor("none");
         
         JOptionPane.showMessageDialog(this, "Person Details Saved");
         

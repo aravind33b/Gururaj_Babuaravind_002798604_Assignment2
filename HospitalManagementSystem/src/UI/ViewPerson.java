@@ -27,6 +27,7 @@ public class ViewPerson extends javax.swing.JPanel {
     private JSplitPane SplitPane;
     PatientDirectory patientDirectory;
     String searchEmail;
+    String mappedDoc ="";
     public ViewPerson(JSplitPane SplitPane,PersonDirectory personDirectory,PatientDirectory patientDirectory, String SearchEmail) {
         initComponents();
         this.personDirectory = personDirectory;
@@ -421,6 +422,10 @@ public class ViewPerson extends javax.swing.JPanel {
          for(Person p: personDirectory.getPersonDirectory())
          {
              if(p.getEmail().equals(searchEmail))
+             {
+                 String mappedDoc = p.getName();
+             }
+             if(p.getPatientToDoctor().equals(mappedDoc))
              {
              Object[] row = new Object[8];
              row[0]=p;

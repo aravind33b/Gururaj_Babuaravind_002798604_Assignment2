@@ -267,8 +267,9 @@ public class ViewPatient extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tblViewPatients.getModel();
         Patient selectedPatient = (Patient) model.getValueAt(selectedRowIndex, 0);
         int PatientID = selectedPatient.getPatientID();
+        String DateVal = "0";
         
-        AddVitalSigns addVitalSigns = new AddVitalSigns(SplitPane,patientDirectory,personDirectory,PatientID);
+        AddVitalSigns addVitalSigns = new AddVitalSigns(SplitPane,patientDirectory,personDirectory,PatientID, DateVal);
         SplitPane.setRightComponent(addVitalSigns);
     }//GEN-LAST:event_btnAddVitalsActionPerformed
 

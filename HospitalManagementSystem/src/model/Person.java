@@ -18,6 +18,14 @@ public class Person extends Address{
     public void setName(String Name) {
         this.Name = Name;
     }
+    
+    public String getPatientToDoctor() {
+        return mapName;
+    }
+    
+    public void setPatientToDoctor(String Name) {
+        this.mapName = Name;
+    }
 
     public int getAge() {
         return age;
@@ -83,4 +91,5 @@ public class Person extends Address{
     protected String Role;
     protected String License;
     protected char Password[];
+    protected String mapName;
 }
