@@ -257,7 +257,19 @@ public class PersonDetails extends javax.swing.JPanel {
 }
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        if(txtName.getText().equals(""))
+        
+        
+        boolean isFormValid = true;
+        
+        if (ValidationUtilities.validateEmail(emailField.getText().trim())) {
+            emailField.requestFocus();
+        } 
+        else if(!ValidationUtilities.validateEmail(emailField.getText().trim())){
+            isFormValid = false;
+            JOptionPane.showMessageDialog(this,"Enter a valid Email");
+        }
+        
+        else if(txtName.getText().equals(""))
        {
            JOptionPane.showMessageDialog(this, "Name Feild is empty");
        }
@@ -384,17 +396,6 @@ public class PersonDetails extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_patientRadioActionPerformed
 
-     public boolean validateForm() {
-        boolean isFormValid = true;
-        
-        if (ValidationUtilities.validateEmail(emailField.getText().trim())) {
-            emailField.requestFocus();
-        } else {
-            isFormValid = false;
-            JOptionPane.showMessageDialog(this,"Enter a valid Email");
-        }
-        return isFormValid;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
