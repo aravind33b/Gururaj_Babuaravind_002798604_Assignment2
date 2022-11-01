@@ -18,6 +18,7 @@ import model.Person;
 import model.PersonDirectory;
 import javax.swing.JSplitPane;
 import model.Patient;
+import model.ValidationUtilities;
 import model.PatientDirectory;
 import UI.PersonDetails;
 
@@ -288,6 +289,10 @@ public class PersonDetails extends javax.swing.JPanel {
        {
         JOptionPane.showMessageDialog(this, "Age Should not be over 200");
        }
+       else if((licenseField.getText().length()==0) && doctorRadio.isSelected() == true)
+       {
+           JOptionPane.showMessageDialog(this, "Enter a License Number");
+       }
 //       else if(!(txtGender.getText().equals("Male") || txtGender.getText().equals("Female") || txtGender.getText().equals("male") || txtGender.getText().equals("female")))
 //       {
 //        JOptionPane.showMessageDialog(this, "Gender Feild Invalid");
@@ -325,6 +330,10 @@ public class PersonDetails extends javax.swing.JPanel {
         txtCommunity.setText("");
         emailField.setText("");
         licenseField.setText("");
+        doctorRadio.setSelected(false);
+        patientRadio.setSelected(false);
+        passField.setText("");
+        
         
         //writting into Patient Table as well
         int t=0;
@@ -375,6 +384,17 @@ public class PersonDetails extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_patientRadioActionPerformed
 
+     public boolean validateForm() {
+        boolean isFormValid = true;
+        
+        if (ValidationUtilities.validateEmail(emailField.getText().trim())) {
+            emailField.requestFocus();
+        } else {
+            isFormValid = false;
+            JOptionPane.showMessageDialog(this,"Enter a valid Email");
+        }
+        return isFormValid;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;

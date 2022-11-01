@@ -218,7 +218,6 @@ public class LoginPanel extends javax.swing.JPanel {
             }
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
