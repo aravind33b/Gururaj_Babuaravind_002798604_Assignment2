@@ -34,4 +34,8 @@ public class PersonDirectory {
     public void deletePerson(Person newPerson){
         personDirectory.remove(newPerson);
     }
+    public void updatePerson(Person person){
+        int index=personDirectory.indexOf(person);
+        personDirectory.set(index, person);
+    }
 }

@@ -27,13 +27,16 @@ public class ViewPatient extends javax.swing.JPanel {
     private JSplitPane SplitPane;
     PersonDirectory personDirectory;
     String Role;
+    String Person;
+    String Name;
  
-    public ViewPatient(JSplitPane SplitPane,PatientDirectory patientDirectory, PersonDirectory personDirectory, String Role) {
+    public ViewPatient(JSplitPane SplitPane,PatientDirectory patientDirectory, PersonDirectory personDirectory, String Role, String Name) {
         initComponents();
         this.patientDirectory = patientDirectory;
         this.SplitPane = SplitPane;
         this.personDirectory = personDirectory;
         this.Role = Role;
+        this.Name = Name;
         populateTable();
     }
 
@@ -448,18 +451,30 @@ public class ViewPatient extends javax.swing.JPanel {
         DefaultTableModel modelvital = (DefaultTableModel) tblVitals.getModel();
         modelvital.setRowCount(0);
          
-         for(Patient p: patientDirectory.getPatientDirectory())
+        for(Person p: personDirectory.getPersonDirectory())
+        {
+            if(p.getPatientToDoctor().equals(Name))
+                Person = p.getName();
+        }
+         for(Patient ptn: patientDirectory.getPatientDirectory())
          {
-             Object[] row = new Object[7];
-             row[0]=p;
-             row[1]=p.getAge();
-             row[2]=p.getGender();
-             row[3]=p.getAddress();
-             row[4]=p.getCity();
-             row[5]=p.getCommunity();
-             row[6]=p.getPatientID();
-             
-             model.addRow(row);
+             {
+                 System.out.println("Outside loop");
+                 if(ptn.getName().equals(Person))
+                 {
+                     System.out.println("Inside loop");
+                    Object[] row = new Object[7];
+                    row[0]=ptn;
+                    row[1]=ptn.getAge();
+                    row[2]=ptn.getGender();
+                    row[3]=ptn.getAddress();
+                    row[4]=ptn.getCity();
+                    row[5]=ptn.getCommunity();
+                    row[6]=ptn.getPatientID();
+
+                    model.addRow(row);   
+                 }
+             }
          }
     }
 }

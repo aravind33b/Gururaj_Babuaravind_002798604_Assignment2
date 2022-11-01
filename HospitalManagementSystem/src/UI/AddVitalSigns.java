@@ -29,6 +29,7 @@ public class AddVitalSigns extends javax.swing.JPanel {
     PersonDirectory personDirectory;
     private int PatientID;
     private String DateVal;
+    public String Name="Babu";
     public AddVitalSigns(JSplitPane SplitPane,PatientDirectory patientDirectory,PersonDirectory personDirectory,int PatientID,String Dateval) {
         initComponents();
         this.patientDirectory = patientDirectory;
@@ -198,6 +199,7 @@ public class AddVitalSigns extends javax.swing.JPanel {
              if(p.getPatientID()==PatientID)
              {
              p.setName(txtName.getText());
+             Name = txtName.getText();
              p.setPatientID(Integer.parseInt(txtPatientID.getText()));
              pe = p.getEH().addNewEncounter();
              pe.setBloodPressure(Integer.parseInt(txtBloodPressure.getText()));
@@ -242,7 +244,7 @@ public class AddVitalSigns extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        ViewPatient viewPatientDetails = new ViewPatient(SplitPane,patientDirectory,personDirectory, "none");
+        ViewPatient viewPatientDetails = new ViewPatient(SplitPane,patientDirectory,personDirectory, "none",Name);
         SplitPane.setRightComponent(viewPatientDetails);
     }//GEN-LAST:event_btnBackActionPerformed
 

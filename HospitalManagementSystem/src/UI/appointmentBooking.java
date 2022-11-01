@@ -29,8 +29,10 @@ public class appointmentBooking extends javax.swing.JPanel {
     PersonDirectory personDirectory;
     String communityID;
     String PatientName;
+    String patientName;
     String SearchEmail;
     int PID;
+    String PersonName;
     String Role;
  
     public appointmentBooking(JSplitPane SplitPane, PersonDirectory personDirectory, PatientDirectory patientDirectory, String SearchEmail, String Role) {
@@ -72,8 +74,6 @@ public class appointmentBooking extends javax.swing.JPanel {
         checkBoxDoctor = new javax.swing.JCheckBox();
         checkBoxHospital = new javax.swing.JCheckBox();
         apointmentBtn = new javax.swing.JButton();
-        docSelected = new javax.swing.JLabel();
-        showDoctor = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         startDate = new javax.swing.JFormattedTextField();
 
@@ -207,8 +207,6 @@ public class appointmentBooking extends javax.swing.JPanel {
             }
         });
 
-        docSelected.setText("Doctor Selected:");
-
         jLabel1.setText("Enter a date:");
 
         startDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
@@ -245,13 +243,10 @@ public class appointmentBooking extends javax.swing.JPanel {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(lblCommunity)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel1)
-                                        .addComponent(docSelected))
+                                    .addGap(22, 22, 22)
+                                    .addComponent(jLabel1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(showDoctor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(startDate, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)))))
+                                    .addComponent(startDate, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -303,18 +298,16 @@ public class appointmentBooking extends javax.swing.JPanel {
                     .addComponent(txtCommunity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch))
                 .addGap(18, 18, 18)
-                .addComponent(checkBoxDoctor)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(checkBoxHospital)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(docSelected)
-                            .addComponent(showDoctor))
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel1))
-                    .addComponent(startDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(checkBoxDoctor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(checkBoxHospital)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addComponent(startDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
@@ -351,6 +344,7 @@ public class appointmentBooking extends javax.swing.JPanel {
              if(SearchEmail.equals(p.getEmail()))
              {
              communityID = p.getCommunity();
+             patientName = p.getName();
              System.out.println(communityID);
              PatientName = p.getName();
              //PID = p.getPatientID();
@@ -440,8 +434,8 @@ public class appointmentBooking extends javax.swing.JPanel {
         
         for(Patient p: patientDirectory.getPatientDirectory())
          {
-             System.out.println(SearchString);
-             System.out.println(p.getName());
+//             System.out.println(SearchString);
+//             System.out.println(p.getName());
              if(p.getName().equals(SearchString))
              {
              Object[] row = new Object[7];
@@ -478,30 +472,37 @@ public class appointmentBooking extends javax.swing.JPanel {
 
     private void btnViewVitalsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewVitalsActionPerformed
         // TODO add your handling code here:
-        int selectedRowIndex = tblViewPatients.getSelectedRow();
-        
-        if(selectedRowIndex<0)
-        {
-            JOptionPane.showMessageDialog(this, "Select a patient to view Vital Signs.");
-            return;
-        }
+//        int selectedRowIndex = tblViewPatients.getSelectedRow();
+//        
+//        if(selectedRowIndex<0)
+//        {
+//            JOptionPane.showMessageDialog(this, "Select a patient to view Vital Signs.");
+//            return;
+//        }
         
         DefaultTableModel modelpat = (DefaultTableModel) tblViewPatients.getModel();
-        Patient selectedPatient = (Patient) modelpat.getValueAt(selectedRowIndex, 0);
-        int PatientID = selectedPatient.getPatientID();
+        for(Person p: personDirectory.getPersonDirectory())
+        {
+            if(p.getEmail().equals(SearchEmail))
+                PersonName=p.getName();
+        }
+//        Patient selectedPatient = (Patient) modelpat.getValueAt(selectedRowIndex, 0);
+//        int PatientID = selectedPatient.getPatientID();
         
         DefaultTableModel model = (DefaultTableModel) tblVitals.getModel();
         model.setRowCount(0);
         
-        for(Patient p: patientDirectory.getPatientDirectory())
+        for(Patient ptn: patientDirectory.getPatientDirectory())
          {
-             if(p.getPatientID()==PatientID)
+             if(ptn.getName()==PersonName)
              { 
+                 System.out.println(ptn.getPatientID());
+                System.out.println(ptn.getName());
              Object[] row = new Object[6];
-             for(Encounter e: p.getEH().getEncounterHistory())
+             for(Encounter e: ptn.getEH().getEncounterHistory())
              {
-             row[0]=p;
-             row[1]=p.getPatientID();
+             row[0]=ptn;
+             row[1]=ptn.getPatientID();
              row[2]=e.getPulse();
              row[3]=e.getBloodPressure();
              row[4]=e.getTemperature();
@@ -652,16 +653,53 @@ public class appointmentBooking extends javax.swing.JPanel {
         Person selectedDoc = (Person) model.getValueAt(selectedRowIndex, 0);
         String selectedDoctor = selectedDoc.getName();
         String DateVal = startDate.getText();
+        for(Person p: personDirectory.getPersonDirectory())
+         {
+             if(p.getName() == patientName) 
+             {
+                 p.setPatientToDoctor(selectedDoctor);
+                 System.out.println(p.getPatientToDoctor());
+                 //personDirectory.updatePerson(p);
+             }
+         }
+//        ViewPatient viewVitalSigns = new ViewPatient(SplitPane, patientDirectory,  personDirectory,  Role);
+//        SplitPane.setRightComponent(viewVitalSigns);
+        
+        JOptionPane.showMessageDialog(this, "Appointment fixed with Dr." + selectedDoctor + "!");
+        }
+        
+        DefaultTableModel modelpat = (DefaultTableModel) tblViewPatients.getModel();
+        for(Person p: personDirectory.getPersonDirectory())
+        {
+            if(p.getEmail().equals(SearchEmail))
+                PersonName=p.getName();
+        }
+//        Patient selectedPatient = (Patient) modelpat.getValueAt(selectedRowIndex, 0);
+//        int PatientID = selectedPatient.getPatientID();
+        
+        DefaultTableModel model = (DefaultTableModel) tblVitals.getModel();
+        model.setRowCount(0);
+        
         for(Patient p: patientDirectory.getPatientDirectory())
          {
-             if(p.getPatientID() == PID)
-                 p.setPatientToDoctor(PatientName);
+             if(p.getName()==PersonName)
+             { 
+                System.out.println(p.getPatientID());
+                System.out.println(p.getName());
+             Object[] row = new Object[6];
+             for(Encounter e: p.getEH().getEncounterHistory())
+             {
+             row[0]=p;
+             row[1]=p.getPatientID();
+             row[2]=e.getPulse();
+             row[3]=e.getBloodPressure();
+             row[4]=e.getTemperature();
+             row[5]=e.getUpdateTime();
+             
+             model.addRow(row);
+             }
+             }
          }
-//        AddVitalSigns addVitalSigns = new AddVitalSigns(SplitPane,patientDirectory,personDirectory,PID, DateVal);
-//        SplitPane.setRightComponent(addVitalSigns);
-        
-        JOptionPane.showMessageDialog(this, "Apointment fixed with Dr." + selectedDoctor + "!");
-        }
         
     }//GEN-LAST:event_apointmentBtnActionPerformed
 
@@ -685,12 +723,10 @@ public class appointmentBooking extends javax.swing.JPanel {
     private javax.swing.JButton btnViewVitals;
     private javax.swing.JCheckBox checkBoxDoctor;
     private javax.swing.JCheckBox checkBoxHospital;
-    private javax.swing.JLabel docSelected;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCommunity;
-    private javax.swing.JLabel showDoctor;
     private javax.swing.JFormattedTextField startDate;
     private javax.swing.JTable tblViewPatients;
     private javax.swing.JTable tblVitals;

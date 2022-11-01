@@ -12,8 +12,8 @@ import javax.swing.JSplitPane;
 import javax.swing.table.DefaultTableModel;
 import model.PatientDirectory;
 import model.Person;
+import model.Patient;
 import model.PersonDirectory;
-
 /**
  *
  * @author aravind
@@ -27,7 +27,8 @@ public class ViewPerson extends javax.swing.JPanel {
     private JSplitPane SplitPane;
     PatientDirectory patientDirectory;
     String searchEmail;
-    String mappedDoc ="";
+    String mappedDoc;
+    String usrName="emptyy";
     String Role;
     public ViewPerson(JSplitPane SplitPane,PersonDirectory personDirectory,PatientDirectory patientDirectory, String SearchEmail, String Role) {
         initComponents();
@@ -69,7 +70,6 @@ public class ViewPerson extends javax.swing.JPanel {
         btnUpdate = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
-        btnAddPatientID = new javax.swing.JButton();
         btnPatient = new javax.swing.JButton();
 
         tblViewPersons.setModel(new javax.swing.table.DefaultTableModel(
@@ -157,13 +157,6 @@ public class ViewPerson extends javax.swing.JPanel {
             }
         });
 
-        btnAddPatientID.setText("Add as Patient");
-        btnAddPatientID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddPatientIDActionPerformed(evt);
-            }
-        });
-
         btnPatient.setText("Manage Patient");
         btnPatient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,7 +174,6 @@ public class ViewPerson extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -206,10 +198,8 @@ public class ViewPerson extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnGo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(8, 8, 8)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(btnPatient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnAddPatientID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnPatient)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnBack)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -230,7 +220,7 @@ public class ViewPerson extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnGo)
-                            .addComponent(btnAddPatientID)))
+                            .addComponent(btnPatient)))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -238,9 +228,7 @@ public class ViewPerson extends javax.swing.JPanel {
                             .addComponent(btnView)
                             .addComponent(btnRefresh)
                             .addComponent(btnBack))))
-                .addGap(18, 18, 18)
-                .addComponent(btnPatient)
-                .addGap(68, 68, 68)
+                .addGap(109, 109, 109)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblName)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -396,25 +384,21 @@ public class ViewPerson extends javax.swing.JPanel {
         SplitPane.setRightComponent(personDetails);
     }//GEN-LAST:event_btnBackActionPerformed
     
-    private void btnAddPatientIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPatientIDActionPerformed
-        // TODO add your handling code here:
-        int selectedRowIndex = tblViewPersons.getSelectedRow();
-        
-        PatientDetails addPatientDetails = new PatientDetails(SplitPane,patientDirectory,personDirectory,selectedRowIndex);
-        SplitPane.setRightComponent(addPatientDetails);
-    }//GEN-LAST:event_btnAddPatientIDActionPerformed
-
     private void btnPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPatientActionPerformed
         // TODO add your handling code here:
 //        PatientDetails addPatientDetails = new PatientDetails(SplitPane,patientDirectory,personDirectory,-1);
 //        SplitPane.setRightComponent(addPatientDetails);
-          ViewPatient viewPatientDetails = new ViewPatient(SplitPane,patientDirectory,personDirectory,Role);
+          for(Person p: personDirectory.getPersonDirectory())
+          {
+            if(p.getEmail().equals(searchEmail))
+            usrName = p.getName();
+          }
+          ViewPatient viewPatientDetails = new ViewPatient(SplitPane,patientDirectory,personDirectory,Role,usrName);
           SplitPane.setRightComponent(viewPatientDetails);
     }//GEN-LAST:event_btnPatientActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddPatientID;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnGo;
@@ -482,23 +466,71 @@ public class ViewPerson extends javax.swing.JPanel {
          for(Person p: personDirectory.getPersonDirectory())
          {
              if(p.getEmail().equals(searchEmail))
+                usrName = p.getName();
+             System.out.println("before if");
+             System.out.println(usrName);      
+             System.out.println(p.getPatientToDoctor());
+             if(usrName.equals(p.getPatientToDoctor()))
              {
-                 String mappedDoc = p.getName();
+                    System.out.println("Success "+p.getPatientToDoctor());
+//                mappedDoc = p.getPatientToDoctor();
+//                System.out.println("Doctor found for " + p.getPatientToDoctor());
+                 
+                    Object[] row = new Object[7];
+                    row[0]=p;
+                    row[1]=p.getAge();
+                    row[2]=p.getEmail();
+                    row[3]=p.getGender();
+                    row[4]=p.getAddress();
+                    row[5]=p.getCity();
+                    row[6]=p.getCommunity();
+                    model.addRow(row);
+                    break;
              }
-             if(p.getPatientToDoctor().equals(mappedDoc))
-             {
-             Object[] row = new Object[8];
-             row[0]=p;
-             row[1]=p.getAge();
-             row[2]=p.getEmail();
-             row[3]=p.getGender();
-             row[4]=p.getAddress();
-             row[5]=p.getCity();
-             row[6]=p.getCommunity();
-             row[7]=p.getRole();
-             
-             model.addRow(row);
-             }
+//             else
+//             {
+//                 p.setPatientToDoctor("Empty");
+//                mappedDoc = p.getPatientToDoctor();
+//                System.out.println("Doctor found for " + p.getPatientToDoctor());
+                 
+//                    Object[] row = new Object[7];
+//                    row[0]=p;
+//                    row[1]=p.getAge();
+//                    row[2]=p.getEmail();
+//                    row[3]=p.getGender();
+//                    row[4]=p.getAddress();
+//                    row[5]=p.getCity();
+//                    row[6]=p.getCommunity();
+//                    model.addRow(row);
+                 
+             //}
          }
+//         for(Patient p: patientDirectory.getPatientDirectory())
+//         {
+//             if(p.getName().equals(mappedDoc))
+//             {
+//             
+//             row[7]=p.getPatientID();
+//             
+//             model.addRow(row);
+//             }
+//         }
+    if(Role=="")
+    {
+        DefaultTableModel model1 = (DefaultTableModel) tblViewPersons.getModel();
+         model1.setRowCount(0);
+         for(Person p: personDirectory.getPersonDirectory())
+         {
+         Object[] row = new Object[7];
+                    row[0]=p;
+                    row[1]=p.getAge();
+                    row[2]=p.getEmail();
+                    row[3]=p.getGender();
+                    row[4]=p.getAddress();
+                    row[5]=p.getCity();
+                    row[6]=p.getCommunity();
+                    model1.addRow(row);
+         }
+    }
     }
 }

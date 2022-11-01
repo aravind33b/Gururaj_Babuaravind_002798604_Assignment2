@@ -29,11 +29,12 @@ public class LoginPanel extends javax.swing.JPanel {
     String str1 = "croot";
     char[] compareString1 = str1.toCharArray();
     char[] compareString = str.toCharArray();
+    String usrName;
     
     public LoginPanel(JSplitPane SplitPane, PatientDirectory patientDirectory, PersonDirectory personDirectory) {
         initComponents();
-        licenseLabel.setVisible(false);
-        licenseField.setVisible(false);
+//        licenseLabel.setVisible(false);
+//        licenseField.setVisible(false);
         this.personDirectory = personDirectory;
         this.SplitPane = SplitPane;
         this.patientDirectory = patientDirectory;
@@ -52,18 +53,14 @@ public class LoginPanel extends javax.swing.JPanel {
         userNameLabel = new javax.swing.JLabel();
         passwordLabel = new javax.swing.JLabel();
         userNameField = new javax.swing.JTextField();
-        licenseLabel = new javax.swing.JLabel();
-        licenseField = new javax.swing.JTextField();
         doctorRadio = new javax.swing.JRadioButton();
         patientRadio = new javax.swing.JRadioButton();
         btnLogin = new javax.swing.JButton();
         passwordField = new javax.swing.JPasswordField();
 
-        userNameLabel.setText("Username");
+        userNameLabel.setText("Email ID:");
 
         passwordLabel.setText("Password");
-
-        licenseLabel.setText("License Number");
 
         buttonGroup2.add(doctorRadio);
         doctorRadio.setText("Doctor");
@@ -97,23 +94,21 @@ public class LoginPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(151, 151, 151)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(licenseLabel)
                             .addComponent(userNameLabel)
                             .addComponent(passwordLabel))
-                        .addGap(96, 96, 96)
+                        .addGap(132, 132, 132)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(licenseField)
                             .addComponent(userNameField)
                             .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(221, 221, 221)
-                        .addComponent(doctorRadio)
-                        .addGap(52, 52, 52)
-                        .addComponent(patientRadio))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(275, 275, 275)
-                        .addComponent(btnLogin)))
-                .addContainerGap(258, Short.MAX_VALUE))
+                        .addComponent(btnLogin))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(220, 220, 220)
+                        .addComponent(doctorRadio)
+                        .addGap(50, 50, 50)
+                        .addComponent(patientRadio)))
+                .addContainerGap(259, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,10 +119,6 @@ public class LoginPanel extends javax.swing.JPanel {
                     .addComponent(userNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(licenseLabel)
-                    .addComponent(licenseField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(passwordLabel)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -136,22 +127,22 @@ public class LoginPanel extends javax.swing.JPanel {
                     .addComponent(patientRadio))
                 .addGap(18, 18, 18)
                 .addComponent(btnLogin)
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addContainerGap(176, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void doctorRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorRadioActionPerformed
         if(doctorRadio.isSelected() == true){
-            licenseLabel.setVisible(true);
-            licenseField.setVisible(true);
+//            licenseLabel.setVisible(true);
+//            licenseField.setVisible(true);
             Role = "Doctor";
         }
     }//GEN-LAST:event_doctorRadioActionPerformed
 
     private void patientRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientRadioActionPerformed
         if(patientRadio.isSelected() == true){
-            licenseLabel.setVisible(false);
-            licenseField.setVisible(false);
+//            licenseLabel.setVisible(false);
+//            licenseField.setVisible(false);
             Role = "Patient";
         }
     }//GEN-LAST:event_patientRadioActionPerformed
@@ -162,6 +153,7 @@ public class LoginPanel extends javax.swing.JPanel {
         SearchEmail = userNameField.getText();
             char SearchPass[] = passwordField.getPassword();
             Integer temp = 0;
+            Integer temp1 = 0;
             if(SearchEmail.length() == 0 || SearchPass[0] == 0)
                 {
                     JOptionPane.showMessageDialog(this, "Username or Password is Empty");
@@ -173,15 +165,21 @@ public class LoginPanel extends javax.swing.JPanel {
 //            Person prn = new Person();
             {
                 for(Person prn :  personDirectory.getPersonDirectory()){
-                    if(prn.getEmail().equals(SearchEmail) && java.util.Arrays.equals(prn.getPassword(),SearchPass))
+                    if(prn.getEmail().equals(SearchEmail) && java.util.Arrays.equals(prn.getPassword(),SearchPass) && prn.getRole()=="Doctor")
                     {
+                        usrName=prn.getName();
                         ViewPerson viewPersonDetails = new ViewPerson(SplitPane,personDirectory,patientDirectory,SearchEmail,Role);
                         SplitPane.setRightComponent(viewPersonDetails);
                         temp=1;
                         break;
                     }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Person does not exist");
+                        temp1=1;
+                    }
                 }
-                if(temp==0)
+                if(temp==0 &&temp1==0)
                 {
                     JOptionPane.showMessageDialog(this, "Username or Password does not match");
                 }
@@ -191,15 +189,20 @@ public class LoginPanel extends javax.swing.JPanel {
         {
             {
                 for(Person p :  personDirectory.getPersonDirectory()){
-                    if(p.getEmail().equals(SearchEmail) && java.util.Arrays.equals(p.getPassword(),SearchPass))
+                    if(p.getEmail().equals(SearchEmail) && java.util.Arrays.equals(p.getPassword(),SearchPass) && p.getRole()=="Patient")
                     {
                         appointmentBooking aptBook = new appointmentBooking(SplitPane,personDirectory,patientDirectory,SearchEmail,Role);
                         SplitPane.setRightComponent(aptBook);
                         temp=1;
                         break;
                     }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Person does not exist");
+                        temp1 = 1;
+                    }
                 }
-                if(temp==0)
+                if(temp==0 && temp1==0)
                 {
                     JOptionPane.showMessageDialog(this, "Username or Password does not match");
                 }
@@ -215,6 +218,8 @@ public class LoginPanel extends javax.swing.JPanel {
             CommunitySearch cSearch = new CommunitySearch(SplitPane,patientDirectory,personDirectory,SearchEmail,str1);
             SplitPane.setRightComponent(cSearch);
         }
+        Role="";
+        buttonGroup2.clearSelection();
             }
     }//GEN-LAST:event_btnLoginActionPerformed
 
@@ -223,8 +228,6 @@ public class LoginPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnLogin;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JRadioButton doctorRadio;
-    private javax.swing.JTextField licenseField;
-    private javax.swing.JLabel licenseLabel;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JRadioButton patientRadio;
