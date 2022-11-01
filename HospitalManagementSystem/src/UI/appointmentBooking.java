@@ -29,13 +29,17 @@ public class appointmentBooking extends javax.swing.JPanel {
     PersonDirectory personDirectory;
     String communityID;
     String PatientName;
+    String SearchEmail;
     int PID;
+    String Role;
  
-    public appointmentBooking(JSplitPane SplitPane, PersonDirectory personDirectory, PatientDirectory patientDirectory, String SearchEmail) {
+    public appointmentBooking(JSplitPane SplitPane, PersonDirectory personDirectory, PatientDirectory patientDirectory, String SearchEmail, String Role) {
         initComponents();
         this.patientDirectory = patientDirectory;
         this.SplitPane = SplitPane;
         this.personDirectory = personDirectory;
+        this.SearchEmail = SearchEmail;
+        this.Role = Role;
         populateTable();
     }
 
@@ -332,9 +336,31 @@ public class appointmentBooking extends javax.swing.JPanel {
         
         DefaultTableModel modelvital = (DefaultTableModel) tblVitals.getModel();
         modelvital.setRowCount(0);
-         
-         for(Patient p: patientDirectory.getPatientDirectory())
+        
+        if(Role=="Patient")
          {
+             btnAddVitals.setVisible(false);
+             btnEdit.setVisible(false);
+             btnDelete.setVisible(false);
+             btnEditVital.setVisible(false);
+             btnDeleteVital.setVisible(false);
+         }
+         
+         for(Person p: personDirectory.getPersonDirectory())
+         {
+             if(SearchEmail.equals(p.getEmail()))
+             {
+             communityID = p.getCommunity();
+             System.out.println(communityID);
+             PatientName = p.getName();
+             //PID = p.getPatientID();
+             break;
+             }
+         }
+         for(Person p: personDirectory.getPersonDirectory())
+         {
+             if(p.getCommunity().equals(communityID) && p.getRole().equals("Doctor"))
+             {
              Object[] row = new Object[7];
              row[0]=p;
              row[1]=p.getAge();
@@ -342,11 +368,9 @@ public class appointmentBooking extends javax.swing.JPanel {
              row[3]=p.getAddress();
              row[4]=p.getCity();
              row[5]=p.getCommunity();
-             row[6]=p.getPatientID();
-             communityID = p.getCommunity();
-             PatientName = p.getName();
-             PID = p.getPatientID();
+//             row[6]=p.getPatientID();
              model.addRow(row);
+             }
          }
     }
     
@@ -552,25 +576,6 @@ public class appointmentBooking extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tblViewPatients.getModel();
         model.setRowCount(0);
         
-//        for(Patient p: patientDirectory.getPatientDirectory())
-//         {
-//             System.out.println(SearchString);
-//             System.out.println(p.getName());
-//             if(p.getName().equals(SearchString))
-//             {
-//             Object[] row = new Object[7];
-//             row[0]=p;
-//             row[1]=p.getAge();
-//             row[2]=p.getGender();
-//             row[3]=p.getAddress();
-//             row[4]=p.getCity();
-//             row[5]=p.getCommunity();
-//             row[6]=p.getPatientID();
-//             
-//             model.addRow(row);
-//             break;
-//             }
-//         }
         
         if(checkBoxDoctor.isSelected())
         {
@@ -595,30 +600,6 @@ public class appointmentBooking extends javax.swing.JPanel {
              }
             }
         }
-        
-//        if(checkBoxHospital.isSelected())
-//        {
-//            model.setRowCount(0);
-//        
-//            for(Person p: personDirectory.getPersonDirectory())
-//            {
-////             System.out.println(SearchString);
-////             System.out.println(p.getName());
-//             if(p.getCommunity().equals(communityID))
-//             {
-//                Object[] row = new Object[7];
-//                row[0]=p;
-//                row[1]=p.getAge();
-//                row[2]=p.getGender();
-//                row[3]=p.getAddress();
-//                row[4]=p.getCity();
-//                row[5]=p.getCommunity();
-//             
-//                model.addRow(row);
-//                break;
-//             }
-//            }
-//        }
         
     }//GEN-LAST:event_btnSearchActionPerformed
 

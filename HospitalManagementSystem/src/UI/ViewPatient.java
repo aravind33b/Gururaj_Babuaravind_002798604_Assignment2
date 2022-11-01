@@ -16,7 +16,7 @@ import model.PersonDirectory;
 
 /**
  *
- * @author Subhash
+ * @author aravind
  */
 public class ViewPatient extends javax.swing.JPanel {
 
@@ -26,12 +26,14 @@ public class ViewPatient extends javax.swing.JPanel {
     PatientDirectory patientDirectory;
     private JSplitPane SplitPane;
     PersonDirectory personDirectory;
+    String Role;
  
-    public ViewPatient(JSplitPane SplitPane,PatientDirectory patientDirectory, PersonDirectory personDirectory) {
+    public ViewPatient(JSplitPane SplitPane,PatientDirectory patientDirectory, PersonDirectory personDirectory, String Role) {
         initComponents();
         this.patientDirectory = patientDirectory;
         this.SplitPane = SplitPane;
         this.personDirectory = personDirectory;
+        this.Role = Role;
         populateTable();
     }
 
@@ -210,7 +212,7 @@ public class ViewPatient extends javax.swing.JPanel {
                             .addComponent(btnEdit)
                             .addComponent(btnAddVitals)
                             .addComponent(btnViewVitals))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 450, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDeleteVital)
                     .addComponent(btnEditVital))
@@ -436,6 +438,12 @@ public class ViewPatient extends javax.swing.JPanel {
     private void populateTable() {
         DefaultTableModel model = (DefaultTableModel) tblViewPatients.getModel();
         model.setRowCount(0);
+        
+        if(Role!="")
+         {
+             btnEdit.setVisible(false);
+             btnDelete.setVisible(false);
+         }
         
         DefaultTableModel modelvital = (DefaultTableModel) tblVitals.getModel();
         modelvital.setRowCount(0);

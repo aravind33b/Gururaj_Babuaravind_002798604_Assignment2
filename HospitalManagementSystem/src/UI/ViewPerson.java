@@ -28,12 +28,14 @@ public class ViewPerson extends javax.swing.JPanel {
     PatientDirectory patientDirectory;
     String searchEmail;
     String mappedDoc ="";
-    public ViewPerson(JSplitPane SplitPane,PersonDirectory personDirectory,PatientDirectory patientDirectory, String SearchEmail) {
+    String Role;
+    public ViewPerson(JSplitPane SplitPane,PersonDirectory personDirectory,PatientDirectory patientDirectory, String SearchEmail, String Role) {
         initComponents();
         this.personDirectory = personDirectory;
         this.SplitPane = SplitPane;
         this.patientDirectory = patientDirectory;
         this.searchEmail = SearchEmail;
+        this.Role = Role;
         populateTable();
     }
 
@@ -55,19 +57,20 @@ public class ViewPerson extends javax.swing.JPanel {
         lblName = new javax.swing.JLabel();
         lblAge = new javax.swing.JLabel();
         lblGender = new javax.swing.JLabel();
-        lblResidence = new javax.swing.JLabel();
+        lblAddress = new javax.swing.JLabel();
         lblCity = new javax.swing.JLabel();
         lblCommunity = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
         txtAge = new javax.swing.JTextField();
         txtGender = new javax.swing.JTextField();
-        txtResidence = new javax.swing.JTextField();
+        txtAddress = new javax.swing.JTextField();
         txtCity = new javax.swing.JTextField();
         txtCommunity = new javax.swing.JTextField();
         btnUpdate = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         btnAddPatientID = new javax.swing.JButton();
+        btnPatient = new javax.swing.JButton();
 
         tblViewPersons.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -121,9 +124,9 @@ public class ViewPerson extends javax.swing.JPanel {
         lblGender.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblGender.setText("Gender:");
 
-        lblResidence.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblResidence.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblResidence.setText("Residence:");
+        lblAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblAddress.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblAddress.setText("Residence:");
 
         lblCity.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblCity.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -161,6 +164,13 @@ public class ViewPerson extends javax.swing.JPanel {
             }
         });
 
+        btnPatient.setText("Manage Patient");
+        btnPatient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPatientActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -174,25 +184,13 @@ public class ViewPerson extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnGo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAddPatientID)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnBack)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnRefresh)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnView)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDelete))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lblAge, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(lblCommunity, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
                                         .addComponent(lblCity, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(lblResidence, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblAddress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(lblGender, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,10 +199,25 @@ public class ViewPerson extends javax.swing.JPanel {
                                         .addComponent(txtName)
                                         .addComponent(txtAge)
                                         .addComponent(txtGender)
-                                        .addComponent(txtResidence)
+                                        .addComponent(txtAddress)
                                         .addComponent(txtCity)
                                         .addComponent(txtCommunity, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnGo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(btnPatient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnAddPatientID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBack)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnRefresh)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnView)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnDelete)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -225,7 +238,9 @@ public class ViewPerson extends javax.swing.JPanel {
                             .addComponent(btnView)
                             .addComponent(btnRefresh)
                             .addComponent(btnBack))))
-                .addGap(109, 109, 109)
+                .addGap(18, 18, 18)
+                .addComponent(btnPatient)
+                .addGap(68, 68, 68)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblName)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -239,8 +254,8 @@ public class ViewPerson extends javax.swing.JPanel {
                     .addComponent(txtGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblResidence)
-                    .addComponent(txtResidence, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblAddress)
+                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCity)
@@ -320,7 +335,7 @@ public class ViewPerson extends javax.swing.JPanel {
         txtAge.setText(String.valueOf(selectedPerson.getAge()));
         //txtGender.setText(selectedPerson.getGender());
         txtCity.setText(selectedPerson.getCity());
-        txtResidence.setText(selectedPerson.getAddress());
+        txtAddress.setText(selectedPerson.getAddress());
         txtCommunity.setText(selectedPerson.getCommunity());
     }//GEN-LAST:event_btnViewActionPerformed
 
@@ -328,7 +343,7 @@ public class ViewPerson extends javax.swing.JPanel {
         // TODO add your handling code here:
     String Name = txtName.getText();
     String Gender = txtGender.getText();
-    String Residence = txtResidence.getText();
+    String Residence = txtAddress.getText();
     String City = txtCity.getText();
     int Age = Integer.parseInt(txtAge.getText());
     String Community = txtCommunity.getText();
@@ -370,7 +385,7 @@ public class ViewPerson extends javax.swing.JPanel {
     txtName.setText("");
     txtAge.setText("");
     txtGender.setText("");
-    txtResidence.setText("");
+    txtAddress.setText("");
     txtCommunity.setText("");
     txtCity.setText("");
     }//GEN-LAST:event_btnUpdateActionPerformed
@@ -389,35 +404,80 @@ public class ViewPerson extends javax.swing.JPanel {
         SplitPane.setRightComponent(addPatientDetails);
     }//GEN-LAST:event_btnAddPatientIDActionPerformed
 
+    private void btnPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPatientActionPerformed
+        // TODO add your handling code here:
+//        PatientDetails addPatientDetails = new PatientDetails(SplitPane,patientDirectory,personDirectory,-1);
+//        SplitPane.setRightComponent(addPatientDetails);
+          ViewPatient viewPatientDetails = new ViewPatient(SplitPane,patientDirectory,personDirectory,Role);
+          SplitPane.setRightComponent(viewPatientDetails);
+    }//GEN-LAST:event_btnPatientActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddPatientID;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnGo;
+    private javax.swing.JButton btnPatient;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnView;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblCity;
     private javax.swing.JLabel lblCommunity;
     private javax.swing.JLabel lblGender;
     private javax.swing.JLabel lblName;
-    private javax.swing.JLabel lblResidence;
     private javax.swing.JTable tblViewPersons;
+    private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtCity;
     private javax.swing.JTextField txtCommunity;
     private javax.swing.JTextField txtGender;
     private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtResidence;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 
     private void populateTable() {
         DefaultTableModel model = (DefaultTableModel) tblViewPersons.getModel();
          model.setRowCount(0);
+         
+         if(Role=="Doctor")
+         {
+//         btnPatient.setVisible(false);
+         lblName.setVisible(false);
+         lblAge.setVisible(false);
+         lblGender.setVisible(false);
+         lblAddress.setVisible(false);
+         lblCity.setVisible(false);
+         lblCommunity.setVisible(false);
+         
+         txtName.setVisible(false);
+         txtAge.setVisible(false);
+         txtGender.setVisible(false);
+         txtAddress.setVisible(false);
+         txtCity.setVisible(false);
+         txtCommunity.setVisible(false);
+         }
+         
+         else if(Role=="")
+         {
+//         btnPatient.setVisible(true);
+         lblName.setVisible(true);
+         lblAge.setVisible(true);
+         lblGender.setVisible(true);
+         lblAddress.setVisible(true);
+         lblCity.setVisible(true);
+         lblCommunity.setVisible(true);
+         
+         txtName.setVisible(true);
+         txtAge.setVisible(true);
+         txtGender.setVisible(true);
+         txtAddress.setVisible(true);
+         txtCity.setVisible(true);
+         txtCommunity.setVisible(true);
+         }
          
          for(Person p: personDirectory.getPersonDirectory())
          {

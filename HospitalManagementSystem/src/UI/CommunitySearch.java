@@ -23,12 +23,16 @@ public class CommunitySearch extends javax.swing.JPanel {
     JSplitPane SplitPane;
     PatientDirectory patientDirectory;
     PersonDirectory personDirectory;
+    String searchEmail;
+    String Role;
     
-    public CommunitySearch(JSplitPane SplitPane,PatientDirectory patientDirectory,PersonDirectory personDirectory) {
+    public CommunitySearch(JSplitPane SplitPane,PatientDirectory patientDirectory,PersonDirectory personDirectory, String searchEmail, String Role) {
         initComponents();
         this.SplitPane = SplitPane;
         this.patientDirectory = patientDirectory;
         this.personDirectory = personDirectory;
+        this.searchEmail = searchEmail;
+        this.Role = Role;
         
         checkBoxAll.setSelected(true);
         txtCommunity.setText("");

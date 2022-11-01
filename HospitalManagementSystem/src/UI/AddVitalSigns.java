@@ -17,7 +17,7 @@ import model.VitalSigns;
 
 /**
  *
- * @author Subhash
+ * @author aravind
  */
 public class AddVitalSigns extends javax.swing.JPanel {
 
@@ -242,7 +242,7 @@ public class AddVitalSigns extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        ViewPatient viewPatientDetails = new ViewPatient(SplitPane,patientDirectory,personDirectory);
+        ViewPatient viewPatientDetails = new ViewPatient(SplitPane,patientDirectory,personDirectory, "none");
         SplitPane.setRightComponent(viewPatientDetails);
     }//GEN-LAST:event_btnBackActionPerformed
 

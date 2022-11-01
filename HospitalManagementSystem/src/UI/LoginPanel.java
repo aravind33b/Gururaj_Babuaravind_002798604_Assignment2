@@ -6,6 +6,7 @@ package UI;
 
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
+import model.Patient;
 import model.PatientDirectory;
 import model.Person;
 import model.PersonDirectory;
@@ -22,7 +23,12 @@ public class LoginPanel extends javax.swing.JPanel {
     private JSplitPane SplitPane;
     PatientDirectory patientDirectory;
     String SearchEmail;
+    int i;
     static String Role = "";
+    String str = "root";
+    String str1 = "croot";
+    char[] compareString1 = str1.toCharArray();
+    char[] compareString = str.toCharArray();
     
     public LoginPanel(JSplitPane SplitPane, PatientDirectory patientDirectory, PersonDirectory personDirectory) {
         initComponents();
@@ -152,23 +158,24 @@ public class LoginPanel extends javax.swing.JPanel {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        if(Role=="Doctor")
-        {   
-//            Person prn;
-//            Person prn = new Person();
-            SearchEmail = userNameField.getText();
+        
+        SearchEmail = userNameField.getText();
             char SearchPass[] = passwordField.getPassword();
             Integer temp = 0;
             if(SearchEmail.length() == 0 || SearchPass[0] == 0)
                 {
                     JOptionPane.showMessageDialog(this, "Username or Password is Empty");
                 }
-            else
+            else {
+        if(Role=="Doctor")
+        {   
+//            Person prn;
+//            Person prn = new Person();
             {
                 for(Person prn :  personDirectory.getPersonDirectory()){
                     if(prn.getEmail().equals(SearchEmail) && java.util.Arrays.equals(prn.getPassword(),SearchPass))
                     {
-                        ViewPerson viewPersonDetails = new ViewPerson(SplitPane,personDirectory,patientDirectory,SearchEmail);
+                        ViewPerson viewPersonDetails = new ViewPerson(SplitPane,personDirectory,patientDirectory,SearchEmail,Role);
                         SplitPane.setRightComponent(viewPersonDetails);
                         temp=1;
                         break;
@@ -182,19 +189,11 @@ public class LoginPanel extends javax.swing.JPanel {
         }
         else if(Role=="Patient")
         {
-            String SearchEmail = userNameField.getText();
-            char SearchPass[] = passwordField.getPassword();
-            Integer temp = 0;
-            if(SearchEmail.length() == 0 || SearchPass[0] == 0)
-                {
-                    JOptionPane.showMessageDialog(this, "Username or Password is Empty");
-                }
-            else
             {
-                for(Person prn :  personDirectory.getPersonDirectory()){
-                    if(prn.getEmail().equals(SearchEmail) && java.util.Arrays.equals(prn.getPassword(),SearchPass))
+                for(Person p :  personDirectory.getPersonDirectory()){
+                    if(p.getEmail().equals(SearchEmail) && java.util.Arrays.equals(p.getPassword(),SearchPass))
                     {
-                        appointmentBooking aptBook = new appointmentBooking(SplitPane,personDirectory,patientDirectory,SearchEmail);
+                        appointmentBooking aptBook = new appointmentBooking(SplitPane,personDirectory,patientDirectory,SearchEmail,Role);
                         SplitPane.setRightComponent(aptBook);
                         temp=1;
                         break;
@@ -206,8 +205,20 @@ public class LoginPanel extends javax.swing.JPanel {
                 }
             }
         }
+        else if(Role=="" && userNameField.getText().equals("root") && java.util.Arrays.equals(compareString,SearchPass))
+        {
+            ViewPerson viewPersonDetails = new ViewPerson(SplitPane,personDirectory,patientDirectory,SearchEmail,Role);
+            SplitPane.setRightComponent(viewPersonDetails);
+        }
+        else if(Role=="" && userNameField.getText().equals("croot") && java.util.Arrays.equals(compareString1,SearchPass))
+        {
+            CommunitySearch cSearch = new CommunitySearch(SplitPane,patientDirectory,personDirectory,SearchEmail,str1);
+            SplitPane.setRightComponent(cSearch);
+        }
+            }
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;

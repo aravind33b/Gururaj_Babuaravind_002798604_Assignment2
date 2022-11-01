@@ -7,7 +7,7 @@ package model;
 
 /**
  *
- * @author Subhash
+ * @author aravind
  */
 public class Encounter extends VitalSigns{
     protected String UpdateTime;

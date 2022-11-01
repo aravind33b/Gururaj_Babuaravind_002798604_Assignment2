@@ -7,7 +7,7 @@ package model;
 
 /**
  *
- * @author Subhash
+ * @author aravind
  */
 public class City {
     protected String City;
