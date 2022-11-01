@@ -261,10 +261,10 @@ public class PersonDetails extends javax.swing.JPanel {
         
         boolean isFormValid = true;
         
-        if (ValidationUtilities.validateEmail(emailField.getText().trim())) {
-            emailField.requestFocus();
-        } 
-        else if(!ValidationUtilities.validateEmail(emailField.getText().trim())){
+//        if (ValidationUtilities.validateEmail(emailField.getText().trim())) {
+//            emailField.requestFocus();
+//        } 
+        if(!ValidationUtilities.validateEmail(emailField.getText().trim())){
             isFormValid = false;
             JOptionPane.showMessageDialog(this,"Enter a valid Email");
         }
